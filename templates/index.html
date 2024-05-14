@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortest Path Between Desa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Jarak Terpendek antar Desa</h1>
+        <form id="pathForm" method="post">
+            <label for="source_kec">Kecamatan Asal:</label>
+            <select id="source_kec" name="source_kec" required>
+                <option value="" disabled selected>Pilih Kecamatan</option>
+                {% for kecamatan in kecamatan_names %}
+                    <option value="{{ kecamatan }}">{{ kecamatan }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <label for="source_desa">Desa Asal:</label>
+            <select id="source_desa" name="source_desa" required>
+                <option value="" disabled selected>Pilih Desa</option>
+            </select><br><br>
+
+            <label for="target_kec">Kecamatan Tujuan:</label>
+            <select id="target_kec" name="target_kec" required>
+                <option value="" disabled selected>Pilih Kecamatan</option>
+                {% for kecamatan in kecamatan_names %}
+                    <option value="{{ kecamatan }}">{{ kecamatan }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <label for="target_desa">Desa Tujuan:</label>
+            <select id="target_desa" name="target_desa" required>
+                <option value="" disabled selected>Pilih Desa</option>
+            </select><br><br>
+
+            <input type="submit" value="Hitung Jarak">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('source_kec').addEventListener('change', function() {
+            var kecamatan = this.value;
+            fetch('/get_desa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({kecamatan: kecamatan})
+            })
+            .then(response => response.json())
+            .then(data => {
+                var desaDropdown = document.getElementById('source_desa');
+                desaDropdown.innerHTML = '<option value="" disabled selected>Pilih Desa</option>';
+                data.desa_list.forEach(function(desa) {
+                    var option = document.createElement('option');
+                    option.text = desa;
+                    option.value = desa;
+                    desaDropdown.appendChild(option);
+                });
+            });
+        });
+
+        document.getElementById('target_kec').addEventListener('change', function() {
+            var kecamatan = this.value;
+            fetch('/get_desa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({kecamatan: kecamatan})
+            })
+            .then(response => response.json())
+            .then(data => {
+                var desaDropdown = document.getElementById('target_desa');
+                desaDropdown.innerHTML = '<option value="" disabled selected>Pilih Desa</option>';
+                data.desa_list.forEach(function(desa) {
+                    var option = document.createElement('option');
+                    option.text = desa;
+                    option.value = desa;
+                    desaDropdown.appendChild(option);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
