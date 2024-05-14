@@ -1,0 +1,9 @@
+{ 
+  "versi" :  2 , 
+  "builds" :  [ 
+    {  "src" :  "app.py" ,  "use" :  "@vercel/python"  } 
+  ] , 
+  "routes" :  [ 
+    {  "src" :  "/(. *)" ,  "tujuan" :  "/app.py"  } 
+  ] 
+}
