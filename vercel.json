@@ -4,6 +4,6 @@
     {  "src" :  "hello.py" ,  "use" :  "@vercel/python"  } 
   ] , 
   "routes" :  [ 
-    {  "src" :  "/(. *)" ,  "tujuan" :  "dest.py"  } 
+    {  "src" :  "/(. *)" ,  "dest" :  "dest.py"  } 
   ] 
 }
