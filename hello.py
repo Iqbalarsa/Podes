@@ -5,7 +5,7 @@ import networkx as nx
 app = Flask(__name__)
 
 def read_data():
-    edges_file_path = 'jarakdesa_test1.xlsx'
+    edges_file_path = 'jarakdesa_test.xlsx'
     master_desa_file_path = 'master_desa.xlsx'
     edges_df = pd.read_excel(edges_file_path)
     master_desa_df = pd.read_excel(master_desa_file_path)
