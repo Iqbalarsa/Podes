@@ -4,15 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hasil Jarak Terpendek</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Jarak terpendek</h1>
-    <p>dari desa {{ source_desa }} ke Desa {{ target_desa }} melalui rute:</p>
-    <ul>
-        {% for desa in shortest_path %}
-            <li>{{ desa }}</li>
-        {% endfor %}
-    </ul>
-    <p>Total jarak adalah: {{ shortest_path_length }} km</p>
+    <div class="container">
+        <h1>Jarak Terpendek</h1>
+        <p>Dari Desa <strong>{{ source_desa }}</strong> ke Desa <strong>{{ target_desa }}</strong> melalui rute:</p>
+        <ul>
+            {% for desa in shortest_path %}
+                <li>{{ desa }}</li>
+            {% endfor %}
+        </ul>
+        <p>Total jarak adalah: <strong>{{ shortest_path_length }} km</strong></p>
+        <a href="/">Hitung Ulang</a>
+    </div>
 </body>
 </html>
