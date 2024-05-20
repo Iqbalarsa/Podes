@@ -23,25 +23,24 @@ def calculate_shortest_path(edges_df, desa_df, source_desa, target_desa):
     shortest_path = nx.shortest_path(G, source_desa, target_desa, weight='jarak')
     return shortest_path, shortest_path_length
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-    if request.method == 'POST':
-        source_kec = request.form['source_kec']
-        source_desa = request.form['source_desa']
-        target_kec = request.form['target_kec']
-        target_desa = request.form['target_desa']
-        
-        edges_df, master_desa_df = read_data()
-        
-        shortest_path, shortest_path_length = calculate_shortest_path(edges_df, master_desa_df, source_desa, target_desa)
-        
-        return render_template('result.html', source_desa=source_desa, target_desa=target_desa,
-                               shortest_path=shortest_path, shortest_path_length=shortest_path_length)
-    
     master_desa_df = pd.read_excel('master_desa.xlsx')
     kecamatan_names = master_desa_df['nmkec'].unique().tolist()
-    
     return render_template('index.html', kecamatan_names=kecamatan_names)
+
+@app.route('/calculate', methods=['GET'])
+def calculate():
+    source_kec = request.args.get('source_kec')
+    source_desa = request.args.get('source_desa')
+    target_kec = request.args.get('target_kec')
+    target_desa = request.args.get('target_desa')
+
+    edges_df, master_desa_df = read_data()
+    shortest_path, shortest_path_length = calculate_shortest_path(edges_df, master_desa_df, source_desa, target_desa)
+
+    return render_template('result.html', source_desa=source_desa, target_desa=target_desa,
+                           shortest_path=shortest_path, shortest_path_length=shortest_path_length)
 
 @app.route('/get_desa', methods=['POST'])
 def get_desa():
