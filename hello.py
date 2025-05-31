@@ -12,8 +12,8 @@ def read_data():
     return edges_df, master_desa_df
 
 def calculate_shortest_path(edges_df, desa_df, source_desa, target_desa):
-    merged_df1 = pd.merge(edges_df, desa_df, left_on='idDesa1', right_on='iddesa')
-    merged_df2 = pd.merge(merged_df1, desa_df, left_on='idDesa2', right_on='iddesa', suffixes=('_desa1', '_desa2'))
+    merged_df1 = pd.merge(edges_df, desa_df, left_on='iddesa1', right_on='iddesa')
+    merged_df2 = pd.merge(merged_df1, desa_df, left_on='iddesa2', right_on='iddesa', suffixes=('_desa1', '_desa2'))
 
     G = nx.Graph()
     for index, row in merged_df2.iterrows():
